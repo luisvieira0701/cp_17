@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 
 
 function Gallery (){
+    // Setting states for loading, tour info, error message, and toogle functionality
     const [tours, setTours] = useState([])
     const [showMore, setShowMore] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
 
+    //Fetching API data, and handling potential errors
     useEffect(() => {
         fetch('https://api.allorigins.win/get?url=https://course-api.com/react-tours-project')
         .then(res => res.json())
@@ -20,16 +22,20 @@ function Gallery (){
             setError(err.message)
             setIsLoading(false)
         })
-    }, []);
+    }, []); //[] Run once when component mounts
 
+    
+    //logic for removing tours button
     const handleRemoveTour = (id) => {
         setTours(tours.filter((tour) => tour.id !== id))
     }
 
+    //logic for toogle functionality
     const handleToogleMore = (id) => {
         setShowMore(prevState => ({...prevState, [id]: !prevState[id]}))
     };
 
+    //Conditional statements for loading, and error messages
     if (isLoading) {
         return <p>Loading...</p>;}
 
