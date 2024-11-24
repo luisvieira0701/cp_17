@@ -12,7 +12,8 @@ function Gallery (){
         fetch('https://api.allorigins.win/get?url=https://course-api.com/react-tours-project')
         .then(res => res.json())
         .then(data => {
-            setTours(data.contents)
+            const toursData = JSON.parse(data.contents)
+            setTours(toursData)
             setIsLoading(false)
         })
         .catch(err => {
@@ -43,8 +44,8 @@ function Gallery (){
                     return (
                         <li key={tour.id}>
                             <h3>{tour.name}</h3>
-                            <p>{tour.price}</p>
-                            <p>{tour.image}</p>
+                            <p>${tour.price}</p>
+                            <img src={tour.image} alt={tour.name} style={{width: '200px'}} />
                             <p>{showMore[tour.id] ? tour.info : `${tour.info.substring(0, 200)}...`}</p>
                             <button onClick={() => handleRemoveTour(tour.id)}>Not interested</button>
                             <button onClick={() => handleToogleMore(tour.id)}>{showMore[tour.id] ? 'Show less' : 'Show more'}</button>
